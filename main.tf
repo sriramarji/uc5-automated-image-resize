@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.5" # You can adjust this to the version you use
+    }
   }
 }
 
@@ -18,6 +22,7 @@ provider "aws" {
     tags = var.default_tags
   }
 }
+
 
 # Random string for unique naming
 resource "random_string" "suffix" {
