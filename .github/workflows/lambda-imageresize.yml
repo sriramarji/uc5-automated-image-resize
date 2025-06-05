@@ -12,6 +12,9 @@ on:
           - apply
           - destroy
 
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   # lint-and-security:
