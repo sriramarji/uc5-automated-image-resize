@@ -1,11 +1,17 @@
+# Variables for SNS module
+
 variable "topic_name" {
-    type = string
+  description = "Name of the SNS topic"
+  type        = string
 }
 
-variable "tags" {
-  type = map(string)
+variable "email_subscriptions" {
+  description = "List of email addresses to subscribe to the SNS topic"
+  type        = list(string)
+  default     = []
 }
 
-variable "email" {
-    type = string
+variable "environment" {
+  description = "Environment (dev, staging, prod)"
+  type        = string
 }

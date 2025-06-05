@@ -1,28 +1,14 @@
+# Variables for Lambda module
+
 variable "function_name" {
   description = "Name of the Lambda function"
   type        = string
 }
 
-variable "role_arn" {
-  description = "ARN of the IAM role for Lambda"
+variable "description" {
+  description = "Description of the Lambda function"
   type        = string
-}
-
-variable "runtime" {
-  description = "Lambda runtime (e.g., python3.9)"
-  type        = string
-  default     = "python3.9"
-}
-
-variable "handler" {
-  description = "Lambda handler (e.g., lambda_function.lambda_handler)"
-  type        = string
-  default     = "lambda_function.lambda_handler"
-}
-
-variable "filename" {
-  description = "Path to the deployment package"
-  type        = string
+  default     = "Image processing function"
 }
 
 variable "source_bucket_name" {
@@ -30,35 +16,39 @@ variable "source_bucket_name" {
   type        = string
 }
 
-variable "dest_bucket_name" {
-  description = "Name of the destination S3 bucket"
+variable "source_bucket_arn" {
+  description = "ARN of the source S3 bucket"
+  type        = string
+}
+
+variable "target_bucket_name" {
+  description = "Name of the processed S3 bucket"
+  type        = string
+}
+
+variable "target_bucket_arn" {
+  description = "ARN of the processed S3 bucket"
   type        = string
 }
 
 variable "sns_topic_arn" {
-  description = "ARN of the SNS topic"
+  description = "ARN of the SNS topic for notifications"
   type        = string
 }
 
-variable "resize_width" {
-  description = "Width to resize images to"
-  type        = number
+variable "environment" {
+  description = "Environment (dev, staging, prod)"
+  type        = string
 }
 
 variable "memory_size" {
-  description = "Memory allocation in MB"
+  description = "Memory allocation for Lambda function in MB"
   type        = number
-  default     = 128
+  default     = 512
 }
 
 variable "timeout" {
-  description = "Timeout in seconds"
+  description = "Timeout for Lambda function in seconds"
   type        = number
-  default     = 30
-}
-
-variable "tags" {
-  description = "Resource tags"
-  type        = map(string)
-  default     = {}
+  default     = 60
 }

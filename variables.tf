@@ -1,33 +1,73 @@
-variable "sns_topic_name" { 
-  default = "image-topic" 
+# Input variables for the main module
+
+variable "aws_region" {
+  description = "AWS region to deploy resources"
+  type        = string
+  default     = "us-east-1"
 }
 
-variable "tags" {
-  type = map(string)
-  default = {
-    Project   = "ImageProcessor"
-    Owner     = "prodTeam"
-    ManagedBy = "Terraform"
+variable "project_name" {
+  description = "Name of the project"
+  type        = string
+  default     = "img-processor"
+}
+
+variable "environment" {
+  description = "Environment (dev, staging, prod)"
+  type        = string
+  default     = "dev"
+
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environment)
+    error_message = "Environment must be one of: dev, staging, prod."
   }
 }
 
-variable "email" {
-  default = "anilkumar.padarthi@hcltech.com"
+variable "force_destroy_buckets" {
+  description = "Boolean to force destruction of S3 buckets even if not empty"
+  type        = bool
+  default     = true
 }
 
-
-variable "source_bucket_name" {
-  default = "anilkumar.padarthi@hcltech.com"
+variable "enable_bucket_versioning" {
+  description = "Enable versioning on S3 buckets"
+  type        = bool
+  default     = true
 }
 
-variable "email" {
-  default = "anilkumar.padarthi@hcltech.com"
+variable "notification_emails" {
+  description = "List of email addresses to notify about image processing"
+  type        = list(string)
+  default     = ["bhaskarsaisri.arji@hcltech.com"]
 }
 
+variable "lambda_memory_size" {
+  description = "Memory allocation for Lambda function in MB"
+  type        = number
+  default     = 512
 
-source_bucket_name
-processed_bucket_name
+  validation {
+    condition     = var.lambda_memory_size >= 128 && var.lambda_memory_size <= 10240
+    error_message = "Lambda memory size must be between 128 and 10240 MB."
+  }
+}
 
-enable_versioning
+variable "lambda_timeout" {
+  description = "Timeout for Lambda function in seconds"
+  type        = number
+  default     = 60
 
-environment
+  validation {
+    condition     = var.lambda_timeout >= 3 && var.lambda_timeout <= 900
+    error_message = "Lambda timeout must be between 3 and 900 seconds."
+  }
+}
+
+variable "default_tags" {
+  description = "Default tags to apply to all resources"
+  type        = map(string)
+  default = {
+    Project   = "ImageProcessor"
+    ManagedBy = "Terraform"
+  }
+}

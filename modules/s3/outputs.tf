@@ -1,30 +1,31 @@
-output "original_images_bucket_id" {
-  description = "ID of the images S3 bucket"
-  value       = aws_s3_bucket.original_images.id
+# Outputs for S3 module
+
+output "source_bucket_id" {
+  description = "ID of the source S3 bucket"
+  value       = aws_s3_bucket.source.id
 }
 
-output "original_images_bucket_name" {
-  description = "Name of the  images S3 bucket"
-  value       = aws_s3_bucket.original_images.bucket
+output "source_bucket_name" {
+  description = "Name of the source S3 bucket"
+  value       = aws_s3_bucket.source.bucket
 }
 
-output "original_images_bucket_arn" {
-  description = "ARN of the  images S3 bucket"
-  value       = aws_s3_bucket.original_images.arn
+output "source_bucket_arn" {
+  description = "ARN of the source S3 bucket"
+  value       = aws_s3_bucket.source.arn
 }
 
-
-output "processed_images_bucket_id" {
-  description = "ID of the processed images S3 bucket"
-  value       = aws_s3_bucket.processed_images.id
+output "target_bucket_id" {
+  description = "ID of the processed S3 bucket"
+  value       = aws_s3_bucket.processed.id
 }
 
-output "processed_images_bucket_name" {
-  description = "Name of the processed images S3 bucket"
-  value       = aws_s3_bucket.processed_images.bucket
+output "target_bucket_name" {
+  description = "Name of the processed S3 bucket"
+  value       = aws_s3_bucket.processed.bucket
 }
 
-output "processed_images_bucket_arn" {
-  description = "ARN of the processed images S3 bucket"
-  value       = aws_s3_bucket.processed_images.arn
+output "target_bucket_arn" {
+  description = "ARN of the processed S3 bucket"
+  value       = aws_s3_bucket.processed.arn
 }

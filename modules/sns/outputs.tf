@@ -1,8 +1,11 @@
-output "sns_topic_name" {
-  value       = aws_sns_topic.topic.name
-  description = "The name of the SNS topic"
+# Outputs for SNS module
+
+output "topic_name" {
+  description = "Name of the SNS topic"
+  value       = aws_sns_topic.notifications.name
 }
 
 output "topic_arn" {
-  value = aws_sns_topic.topic.arn
+  description = "ARN of the SNS topic"
+  value       = aws_sns_topic.notifications.arn
 }
