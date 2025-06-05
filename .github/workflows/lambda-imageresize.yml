@@ -24,7 +24,7 @@ jobs:
      steps:
        - name: Checkout code
          uses: actions/checkout@v4
-
+       
        - name: Install TFLint
          run: |
            wget https://github.com/terraform-linters/tflint/releases/download/v0.50.2/tflint_linux_amd64.zip
@@ -32,9 +32,31 @@ jobs:
            sudo mv tflint /usr/local/bin/
            tflint --version
 
+       - name: Install terraform-docs
+         run: |
+           curl -sSLo terraform-docs.tar.gz https://terraform-docs.io/dl/v0.20.0/terraform-docs-v0.20.0-linux-amd64.tar.gz
+           tar -xzf terraform-docs.tar.gz
+           chmod +x terraform-docs
+           sudo mv terraform-docs /usr/local/bin/
+       
        - name: Run TFLint
          run: tflint --init && tflint -f compact
          working-directory: ./
+
+       - name: Generate Terraform Docs
+         run: terraform-docs markdown table . > README.md
+         
+      
+       - name: Commit Terraform Docs
+         run: pip install checkov
+        
+       - name: Install terraform-docs
+         run: |
+           git config --global user.name "github-actions"
+           git config --global user.email "github-actions@github.com"
+           git add README.md
+           git commit -m "Update Terraform docs [skip ci]" || echo "No changes to commit"
+           git push
       
        - name: Install Checkov
          run: pip install checkov
